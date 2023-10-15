@@ -1,0 +1,14 @@
+version: '3.4'
+
+volumes:
+  mongo_data:
+
+services:
+  catalogdb:
+    image: mongo
+
+  catalog:
+    image: ${DOCKER_REGISTRY-}catalog
+    build:
+      context: .
+      dockerfile: Services\Catalog\Catalog.API\Dockerfile
