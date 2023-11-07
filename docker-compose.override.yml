@@ -1,44 +1,65 @@
 version: '3.4'
 
 services:
-   catalogdb:
-        container_name: catalogdb
-        restart: always
-        ports:
-            - "27017:27017"
-        volumes:
-            - mongo_data:/data/db
-   basketdb:
-        container_name: basketdb
-        restart: always    
-        ports:
-            - "6379:6379"
-   
-   basket.api:
-        container_name: basket.api
-        environment:
-          - ASPNETCORE_ENVIRONMENT=Development
-          - "CacheSettings:ConnectionString=basketdb:6379"
-        depends_on:
-          - basketdb
-        ports:
-          - "8001:80"
+  catalogdb:
+    container_name: catalogdb
+    restart: always
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo_data:/data/db
 
-   catalog.api:
-        container_name: catalog.api
-        build:
-          context: .
-          dockerfile: Services\Catalog\Catalog.API\Dockerfile
-        environment:
-          - ASPNETCORE_ENVIRONMENT=Development
-          - "DatabaseSettings:ConnectionString=mongodb://catalogdb:27017"
-          - "ElasticConfiguration:Uri=http://elasticsearch:9200"
-        depends_on:
-          - catalogdb
-        ports:
-          - "8000:80"  
-        volumes:
-          - ./Users/amigo/AppData/Roaming/Microsoft/UserSecrets:/Users/ContainerUser/AppData/Roaming/Microsoft/UserSecrets:ro
-volumes:
-  mongo_data:
+  basketdb:
+    container_name: basketdb
+    restart: always    
+    ports:
+      - "6379:6379"
 
+  discountdb:
+    container_name: discountdb
+    restart: always
+    ports:
+      - "1434:1433"
+    environment:
+      MSSQL_SA_PASSWORD: "0x7s-gro9-2rdy"
+      ACCEPT_EULA: "Y"
+      MSSQL_PID: "Express"
+
+  basket.api:
+    container_name: basket.api
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - "CacheSettings:ConnectionString=basketdb:6379"
+    depends_on:
+      - basketdb
+    ports:
+      - "8001:80"
+
+  catalog.api:
+    container_name: catalog.api
+    build:
+      context: .
+      dockerfile: Services\Catalog\Catalog.API\Dockerfile
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - "DatabaseSettings:ConnectionString=mongodb://catalogdb:27017"
+      - "ElasticConfiguration:Uri=http://elasticsearch:9200"
+    depends_on:
+      - catalogdb
+    ports:
+      - "8000:80"  
+    volumes:
+      - ./Users/amigo/AppData/Roaming/Microsoft/UserSecrets:/Users/ContainerUser/AppData/Roaming/Microsoft/UserSecrets:ro
+
+  discount.api:
+    container_name: discount.api
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - "ConnectionStrings:DapperConnection=Server=discountdb;Database=DiscountDb;User Id=sa;Password=0x7s-gro9-2rdy;MultipleActiveResultSets=true;trustServerCertificate=true;"
+      - ASPNETCORE_URLS=http://+:80
+    ports:
+      - "8002:80" 
+    depends_on:
+      - discountdb
+    volumes:
+      - ./Users/amigo/AppData/Roaming/Microsoft/UserSecrets:/Users/ContainerUser/AppData/Roaming/Microsoft/UserSecrets:ro

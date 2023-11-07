@@ -9,8 +9,17 @@ services:
 
   basketdb:
     image: redis:alpine
-  
-  catalog:
+
+  discountdb:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    container_name: discountdb
+    ports:
+      - "1434:1433"
+    environment:
+      MSSQL_SA_PASSWORD: "0x7s-gro9-2rdy"
+      ACCEPT_EULA: "Y"
+
+  catalog.api:
     image: ${DOCKER_REGISTRY-}catalog
     build:
       context: .
@@ -22,3 +31,14 @@ services:
       context: .
       dockerfile: Services\Basket\Basket.API\Dockerfile
 
+
+  discount.api:
+    image: ${DOCKER_REGISTRY-}discountapi
+    build:
+      context: .
+      dockerfile: Services\Discount\Discount.API\Dockerfile
+    ports: 
+      - 8002:80
+    depends_on: 
+      - discountdb
+  

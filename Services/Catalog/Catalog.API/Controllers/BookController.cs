@@ -64,7 +64,7 @@ namespace Catalog.Controllers
             return Ok(books);
         }
 
-        [HttpPost(Name = "AddBook")]
+        [HttpPost("AddBook")]
         [ProducesResponseType(typeof(Book), (int)HttpStatusCode.Created)]  
         public async Task<ActionResult<Book>> CreateBook([FromBody] Book book)
         {
@@ -76,7 +76,7 @@ namespace Catalog.Controllers
             return CreatedAtRoute("GetBookById", new { id = book.Id }, book);
         }
 
-        [HttpPut(Name="UpdateBook")]
+        [HttpPut("UpdateBook")]
         [ProducesResponseType(typeof(Book), (int)HttpStatusCode.OK)]
         public async Task<IActionResult> UpdateBook([FromBody] Book book)
         {

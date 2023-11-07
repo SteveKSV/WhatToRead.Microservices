@@ -6,7 +6,7 @@ using System.Net;
 namespace Basket.API.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
+    [Route("/api/v1/[controller]")]
     public class BasketController : ControllerBase
     {
         private readonly IBasketManager _manager;
