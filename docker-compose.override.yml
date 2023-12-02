@@ -1,6 +1,13 @@
 version: '3.4'
 
 services:
+  rabbitmq:
+     container_name: rabbitmq
+     restart: always
+     ports:
+     - "5672:5672"
+     - "15672:15672"
+
   catalogdb:
     container_name: catalogdb
     restart: always
@@ -24,7 +31,17 @@ services:
       MSSQL_SA_PASSWORD: "0x7s-gro9-2rdy"
       ACCEPT_EULA: "Y"
       MSSQL_PID: "Express"
+  
+  orderdb:
+    container_name: orderdb
+    ports:
+     - "1435:1433"
+    environment:
+      MSSQL_SA_PASSWORD: "0x7s-gro9-2rdy"
+      ACCEPT_EULA: "Y"
+      MSSQL_PID: "Express"
 
+  
   basket.api:
     container_name: basket.api
     environment:
@@ -34,7 +51,7 @@ services:
       - basketdb
     ports:
       - "8001:80"
-
+  
   catalog.api:
     container_name: catalog.api
     build:
@@ -43,14 +60,13 @@ services:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - "DatabaseSettings:ConnectionString=mongodb://catalogdb:27017"
-      - "ElasticConfiguration:Uri=http://elasticsearch:9200"
     depends_on:
       - catalogdb
     ports:
       - "8000:80"  
     volumes:
       - ./Users/amigo/AppData/Roaming/Microsoft/UserSecrets:/Users/ContainerUser/AppData/Roaming/Microsoft/UserSecrets:ro
-
+    
   discount.api:
     container_name: discount.api
     environment:
@@ -63,3 +79,52 @@ services:
       - discountdb
     volumes:
       - ./Users/amigo/AppData/Roaming/Microsoft/UserSecrets:/Users/ContainerUser/AppData/Roaming/Microsoft/UserSecrets:ro
+
+  discount.grpc:
+    container_name: discount.grpc
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - "DatabaseSettings:ConnectionString=Server=discountdb;Port=5432;Database=DiscountDb;User Id=sa;Password=0x7s-gro9-2rdy;MultipleActiveResultSets=true;trustServerCertificate=true;"
+    ports:
+      - "8003:80"
+    depends_on:
+      - discountdb
+    
+  
+  ordering.api:
+    container_name: ordering.api
+    environment:
+        - ASPNETCORE_ENVIRONMENT=Development
+        - "ConnectionStrings:OrderingConnectionString=Server=orderdb;Database=OrderDb;User Id=sa;Password=0x7s-gro9-2rdy;MultipleActiveResultSets=true;trustServerCertificate=true;"            
+        - "EventBusSettings:HostAddress=amqp://guest:guest@rabbitmq:5672"
+    depends_on:
+        - orderdb
+        - rabbitmq
+    ports:
+        - "8004:80"
+  
+  ocelotapigw:
+    container_name: ocelotapigw
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+    depends_on:
+        - catalog.api
+        - basket.api
+        - discount.api
+        - ordering.api
+    ports:
+      - "8010:80"
+  
+  shopping.aggregator:
+    container_name: shopping.aggregator
+    environment:
+        - ASPNETCORE_ENVIRONMENT=Development
+        - "ApiSettings:CatalogUrl=http://catalog.api"
+        - "ApiSettings:BasketUrl=http://basket.api"
+        - "ApiSettings:OrderingUrl=http://ordering.api"
+    depends_on:
+        - catalog.api
+        - basket.api
+        - ordering.api
+    ports:
+        - "8005:80"

@@ -1,6 +1,9 @@
 using Basket.API.Managers;
 using Basket.API.Managers.Interfaces;
+using MassTransit;
+using Microsoft.Extensions.Configuration;
 using Microsoft.OpenApi.Models;
+using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -13,8 +16,16 @@ builder.Services.AddStackExchangeRedisCache(options =>
     options.Configuration = builder.Configuration.GetValue<string>("CacheSettings:ConnectionString");
 });
 
-builder.Services.AddScoped<IBasketManager, BasketManager>();
+// MassTransit-RabbitMQ Configuration
+builder.Services.AddMassTransit(config =>
+                                {
+                                    config.UsingRabbitMq((context, rabbitConfig) => {
+                                        rabbitConfig.Host(new Uri(builder.Configuration.GetValue<string>("EventBusSettings:HostAddress")));
+                                    });
+                                });
 
+builder.Services.AddScoped<IBasketManager, BasketManager>();
+builder.Services.AddAutoMapper(Assembly.GetExecutingAssembly());
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(c =>
 {

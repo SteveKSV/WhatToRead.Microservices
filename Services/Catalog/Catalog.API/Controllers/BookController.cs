@@ -16,7 +16,7 @@ namespace Catalog.Controllers
             _manager = manager ?? throw new ArgumentNullException(nameof(manager));
         }
 
-        [HttpGet("GetBooks")]
+        [HttpGet]
         [ProducesResponseType(typeof(IEnumerable<Book>), (int)HttpStatusCode.OK)]
         public async Task<ActionResult<IEnumerable<Book>>> GetBooks()
         {
@@ -24,12 +24,18 @@ namespace Catalog.Controllers
             return Ok(products);
         }
 
-        [HttpGet("GetBookById")]
+        [HttpGet("{id}", Name = "GetBookById")]
         [ProducesResponseType(typeof(Book), (int)HttpStatusCode.OK)]
         public async Task<ActionResult<Book>> GetBookById(string id)
         {
             var book = await _manager.GetBookById(id);
-            return Ok(book);
+
+            if (book != null)
+            {
+                return Ok(book);
+            }
+
+            return NotFound();
         }
 
         [HttpGet("GetBookByTitle")]
@@ -65,7 +71,7 @@ namespace Catalog.Controllers
         }
 
         [HttpPost("AddBook")]
-        [ProducesResponseType(typeof(Book), (int)HttpStatusCode.Created)]  
+        [ProducesResponseType(typeof(Book), (int)HttpStatusCode.Created)]
         public async Task<ActionResult<Book>> CreateBook([FromBody] Book book)
         {
             // Generate a random 24-digit hexadecimal string for the Id
@@ -73,8 +79,10 @@ namespace Catalog.Controllers
 
             await _manager.CreateEntity(book);
 
+            // Issue may be here: Check the 'new { id = book.Id }' part
             return CreatedAtRoute("GetBookById", new { id = book.Id }, book);
         }
+
 
         [HttpPut("UpdateBook")]
         [ProducesResponseType(typeof(Book), (int)HttpStatusCode.OK)]

@@ -7,8 +7,20 @@ services:
   catalogdb:
     image: mongo
 
+  rabbitmq:
+    image: rabbitmq:3-management-alpine
+
   basketdb:
     image: redis:alpine
+
+  orderdb:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    container_name: orderdb
+    ports:
+      - "1435:1433"
+    environment:
+      MSSQL_SA_PASSWORD: "0x7s-gro9-2rdy"
+      ACCEPT_EULA: "Y"
 
   discountdb:
     image: mcr.microsoft.com/mssql/server:2022-latest
@@ -31,7 +43,6 @@ services:
       context: .
       dockerfile: Services\Basket\Basket.API\Dockerfile
 
-
   discount.api:
     image: ${DOCKER_REGISTRY-}discountapi
     build:
@@ -42,3 +53,26 @@ services:
     depends_on: 
       - discountdb
   
+  discount.grpc:
+    image: ${DOCKER_REGISTRY-}discountgrpc
+    build:
+      context: .
+      dockerfile: Services\Discount\Discount.Grpc\Dockerfile
+
+  ordering.api:
+    image: ${DOCKER_REGISTRY-}orderingapi
+    build:
+      context: .
+      dockerfile: Services\Ordering\Ordering.API\Dockerfile
+
+  ocelotapigw:
+    image: ${DOCKER_REGISTRY-}ocelotapigw
+    build:
+      context: .
+      dockerfile: ApiGateaways\OcelotApiGw\Dockerfile  
+
+  shopping.aggregator:
+    image: ${DOCKER_REGISTRY-}shoppingaggregator
+    build:
+      context: .
+      dockerfile: ApiGateaways\Shopping.Aggregator\Dockerfile
