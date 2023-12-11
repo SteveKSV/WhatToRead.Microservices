@@ -3,15 +3,19 @@
     //Catalog API
     {
       "DownstreamPathTemplate": "/api/v1/Book/GetBooks",
-      "DownstreamScheme": "http",
+      "DownstreamScheme": "https",
       "DownstreamHostAndPorts": [
         {
           "Host": "localhost",
-          "Port": "8000"
+          "Port": 5001
         }
       ],
       "UpstreamPathTemplate": "/Catalog/",
       "UpstreamHttpMethod": [ "GET" ],
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "IdentityApiKey",
+        "AllowedScopes": ["openid", "Catalog.API.read", "Catalog.API.write"]
+      },
       "FileCacheOptions": { "TtlSeconds": 30 }
     },
     {

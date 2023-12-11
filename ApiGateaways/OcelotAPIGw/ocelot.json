@@ -7,7 +7,7 @@
       "DownstreamHostAndPorts": [
         {
           "Host": "localhost",
-          "Port": "8000"
+          "Port": 8000
         }
       ],
       "UpstreamPathTemplate": "/Catalog/",
@@ -20,7 +20,7 @@
       "DownstreamHostAndPorts": [
         {
           "Host": "localhost",
-          "Port": "8000"
+          "Port": 8000
         }
       ],
       "UpstreamPathTemplate": "/Catalog/{id}",
@@ -32,7 +32,7 @@
       "DownstreamHostAndPorts": [
         {
           "Host": "localhost",
-          "Port": "8000"
+          "Port": 8000
         }
       ],
       "UpstreamPathTemplate": "/Catalog/GetProductByCategory/{category}",
@@ -44,7 +44,7 @@
       "DownstreamHostAndPorts": [
         {
           "Host": "localhost",
-          "Port": "8000"
+          "Port": 8000
         }
       ],
       "UpstreamPathTemplate": "/Catalog/GetBooksByAuthor/{authorName}",
@@ -56,7 +56,7 @@
       "DownstreamHostAndPorts": [
         {
           "Host": "localhost",
-          "Port": "8000"
+          "Port": 8000
         }
       ],
       "UpstreamPathTemplate": "/Catalog/GetBooksByPublisher/{publisher}",
@@ -68,7 +68,7 @@
       "DownstreamHostAndPorts": [
         {
           "Host": "localhost",
-          "Port": "8000"
+          "Port": 8000
         }
       ],
       "UpstreamPathTemplate": "/Catalog/GetBooksByGenre/{genre}",
@@ -80,7 +80,7 @@
       "DownstreamHostAndPorts": [
         {
           "Host": "localhost",
-          "Port": "8000"
+          "Port": 8000
         }
       ],
       "UpstreamPathTemplate": "/Catalog/AddBook",
@@ -92,7 +92,7 @@
       "DownstreamHostAndPorts": [
         {
           "Host": "localhost",
-          "Port": "8000"
+          "Port": 8000
         }
       ],
       "UpstreamPathTemplate": "/Catalog/UpdateBook",
@@ -104,7 +104,7 @@
       "DownstreamHostAndPorts": [
         {
           "Host": "localhost",
-          "Port": "8000"
+          "Port": 8000
         }
       ],
       "UpstreamPathTemplate": "/Catalog/DeleteBook/{id}",
@@ -118,7 +118,7 @@
       "DownstreamHostAndPorts": [
         {
           "Host": "localhost",
-          "Port": "8001"
+          "Port": 8001
         }
       ],
       "UpstreamPathTemplate": "/Basket/{userName}",
@@ -130,7 +130,7 @@
       "DownstreamHostAndPorts": [
         {
           "Host": "localhost",
-          "Port": "8001"
+          "Port": 8001
         }
       ],
       "UpstreamPathTemplate": "/Basket",
@@ -142,7 +142,7 @@
       "DownstreamHostAndPorts": [
         {
           "Host": "localhost",
-          "Port": "8001"
+          "Port": 8001
         }
       ],
       "UpstreamPathTemplate": "/Basket/Checkout",
@@ -155,7 +155,7 @@
       "DownstreamHostAndPorts": [
         {
           "Host": "localhost",
-          "Port": "8002"
+          "Port": 8002
         }
       ],
       "UpstreamPathTemplate": "/Discount/{productName}",
@@ -167,7 +167,7 @@
       "DownstreamHostAndPorts": [
         {
           "Host": "localhost",
-          "Port": "8002"
+          "Port": 8002
         }
       ],
       "UpstreamPathTemplate": "/Discount",
@@ -180,7 +180,7 @@
       "DownstreamHostAndPorts": [
         {
           "Host": "localhost",
-          "Port": "8004"
+          "Port": 8004
         }
       ],
       "UpstreamPathTemplate": "/Order/{userName}",

@@ -2,16 +2,25 @@ version: '3.4'
 
 volumes:
   mongo_data:
+ 
+networks:
+  backend:
 
 services:
   catalogdb:
     image: mongo
+    networks:
+     - backend
 
   rabbitmq:
     image: rabbitmq:3-management-alpine
+    networks:
+     - backend
 
   basketdb:
     image: redis:alpine
+    networks:
+     - backend
 
   orderdb:
     image: mcr.microsoft.com/mssql/server:2022-latest
@@ -21,6 +30,8 @@ services:
     environment:
       MSSQL_SA_PASSWORD: "0x7s-gro9-2rdy"
       ACCEPT_EULA: "Y"
+    networks:
+     - backend
 
   discountdb:
     image: mcr.microsoft.com/mssql/server:2022-latest
@@ -36,12 +47,16 @@ services:
     build:
       context: .
       dockerfile: Services\Catalog\Catalog.API\Dockerfile
+    networks:
+     - backend
 
   basket.api:
     image: ${DOCKER_REGISTRY-}basketapi
     build:
       context: .
       dockerfile: Services\Basket\Basket.API\Dockerfile
+    networks:
+     - backend
 
   discount.api:
     image: ${DOCKER_REGISTRY-}discountapi
@@ -52,27 +67,37 @@ services:
       - 8002:80
     depends_on: 
       - discountdb
+    networks:
+     - backend
   
   discount.grpc:
     image: ${DOCKER_REGISTRY-}discountgrpc
     build:
       context: .
       dockerfile: Services\Discount\Discount.Grpc\Dockerfile
+    networks:
+     - backend
 
   ordering.api:
     image: ${DOCKER_REGISTRY-}orderingapi
     build:
       context: .
       dockerfile: Services\Ordering\Ordering.API\Dockerfile
+    networks:
+     - backend
 
   ocelotapigw:
     image: ${DOCKER_REGISTRY-}ocelotapigw
     build:
       context: .
       dockerfile: ApiGateaways\OcelotApiGw\Dockerfile  
+    networks:
+     - backend
 
   shopping.aggregator:
     image: ${DOCKER_REGISTRY-}shoppingaggregator
     build:
       context: .
       dockerfile: ApiGateaways\Shopping.Aggregator\Dockerfile
+    networks:
+     - backend

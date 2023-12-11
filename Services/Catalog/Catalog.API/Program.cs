@@ -1,10 +1,7 @@
-using Catalog;
-using Catalog.Managers;
 using Catalog.Managers.Interfaces;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Options;
+using Catalog.Managers;
+using Catalog;
 using Microsoft.OpenApi.Models;
-using MongoDB.Driver;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -15,6 +12,15 @@ builder.Services.AddTransient<MongoDbContext>();
 builder.Services.AddScoped<IBookManager, BookManager>();
 
 builder.Services.AddControllers();
+
+builder.Services.AddAuthentication("Bearer")
+    .AddIdentityServerAuthentication("Bearer", options =>
+    {
+        options.Authority = "https://localhost:5443";
+        options.ApiName = "Catalog.API";
+        options.RequireHttpsMetadata = false;
+    });
+
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(c =>
 {
@@ -30,6 +36,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Catalog.API v1"));
 }
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();

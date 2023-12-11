@@ -60,6 +60,8 @@ services:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - "DatabaseSettings:ConnectionString=mongodb://catalogdb:27017"
+    networks:
+      - backend
     depends_on:
       - catalogdb
     ports:
@@ -114,6 +116,8 @@ services:
         - ordering.api
     ports:
       - "8010:80"
+    networks:
+      - backend
   
   shopping.aggregator:
     container_name: shopping.aggregator

@@ -7,7 +7,7 @@
       "DownstreamHostAndPorts": [
         {
           "Host": "catalog.api",
-          "Port": "80"
+          "Port": 80
         }
       ],
       "UpstreamPathTemplate": "/Catalog/",
@@ -20,7 +20,7 @@
       "DownstreamHostAndPorts": [
         {
           "Host": "catalog.api",
-          "Port": "80"
+          "Port": 80
         }
       ],
       "UpstreamPathTemplate": "/Catalog/{id}",
@@ -32,7 +32,7 @@
       "DownstreamHostAndPorts": [
         {
           "Host": "catalog.api",
-          "Port": "80"
+          "Port": 80
         }
       ],
       "UpstreamPathTemplate": "/Catalog/GetProductByCategory/{category}",
@@ -44,7 +44,7 @@
       "DownstreamHostAndPorts": [
         {
           "Host": "catalog.api",
-          "Port": "80"
+          "Port": 80
         }
       ],
       "UpstreamPathTemplate": "/Catalog/GetBooksByAuthor/{authorName}",
@@ -56,7 +56,7 @@
       "DownstreamHostAndPorts": [
         {
           "Host": "catalog.api",
-          "Port": "80"
+          "Port": 80
         }
       ],
       "UpstreamPathTemplate": "/Catalog/GetBooksByPublisher/{publisher}",
@@ -68,7 +68,7 @@
       "DownstreamHostAndPorts": [
         {
           "Host": "catalog.api",
-          "Port": "80"
+          "Port": 80
         }
       ],
       "UpstreamPathTemplate": "/Catalog/GetBooksByGenre/{genre}",
@@ -80,7 +80,7 @@
       "DownstreamHostAndPorts": [
         {
           "Host": "catalog.api",
-          "Port": "80"
+          "Port": 80
         }
       ],
       "UpstreamPathTemplate": "/Catalog/AddBook",
@@ -92,7 +92,7 @@
       "DownstreamHostAndPorts": [
         {
           "Host": "catalog.api",
-          "Port": "80"
+          "Port": 80
         }
       ],
       "UpstreamPathTemplate": "/Catalog/UpdateBook",
@@ -104,7 +104,7 @@
       "DownstreamHostAndPorts": [
         {
           "Host": "catalog.api",
-          "Port": "80"
+          "Port": 80
         }
       ],
       "UpstreamPathTemplate": "/Catalog/DeleteBook/{id}",
@@ -118,7 +118,7 @@
       "DownstreamHostAndPorts": [
         {
           "Host": "basket.api",
-          "Port": "80"
+          "Port": 80
         }
       ],
       "UpstreamPathTemplate": "/Basket/{userName}",
@@ -130,7 +130,7 @@
       "DownstreamHostAndPorts": [
         {
           "Host": "basket.api",
-          "Port": "80"
+          "Port": 80
         }
       ],
       "UpstreamPathTemplate": "/Basket",
@@ -142,7 +142,7 @@
       "DownstreamHostAndPorts": [
         {
           "Host": "basket.api",
-          "Port": "80"
+          "Port": 80
         }
       ],
       "UpstreamPathTemplate": "/Basket/Checkout",
@@ -155,7 +155,7 @@
       "DownstreamHostAndPorts": [
         {
           "Host": "discount.api",
-          "Port": "80"
+          "Port": 80
         }
       ],
       "UpstreamPathTemplate": "/Discount/{productName}",
@@ -167,7 +167,7 @@
       "DownstreamHostAndPorts": [
         {
           "Host": "discount.api",
-          "Port": "80"
+          "Port": 80
         }
       ],
       "UpstreamPathTemplate": "/Discount",
@@ -180,7 +180,7 @@
       "DownstreamHostAndPorts": [
         {
           "Host": "order.api",
-          "Port": "80"
+          "Port": 80
         }
       ],
       "UpstreamPathTemplate": "/Order/{userName}",
@@ -188,6 +188,6 @@
     }
   ],
   "GlobalConfiguration": {
-    "BaseUrl": "http://localhost:5010"
+    "BaseUrl": "http://localhost:8010"
   }
 }

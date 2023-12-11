@@ -34,6 +34,15 @@
       },
       "publishAllPorts": true,
       "useSSL": true
+    },
+    "Shopping.Aggregator": {
+      "commandName": "Project",
+      "launchBrowser": true,
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      },
+      "dotnetRunMessages": true,
+      "applicationUrl": "http://localhost:8011"
     }
   },
   "iisSettings": {

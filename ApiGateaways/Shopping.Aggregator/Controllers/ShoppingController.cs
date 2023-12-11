@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Shopping.Aggregator.Models;
 using Shopping.Aggregator.Services.Interfaces;
 using System.Net;
@@ -7,6 +8,7 @@ namespace Shopping.Aggregator.Controllers
 {
     [ApiController]
     [Route("api/v1/[controller]")]
+    [Authorize]
     public class ShoppingController : ControllerBase
     {
         private readonly ICatalogService _catalogService;

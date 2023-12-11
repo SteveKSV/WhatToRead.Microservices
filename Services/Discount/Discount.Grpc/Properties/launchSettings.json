@@ -23,6 +23,15 @@
         "ASPNETCORE_URLS": "http://+:80"
       },
       "publishAllPorts": true
+    },
+    "Discount.Grpc": {
+      "commandName": "Project",
+      "launchBrowser": true,
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      },
+      "dotnetRunMessages": true,
+      "applicationUrl": "http://localhost:8003"
     }
   }
 }

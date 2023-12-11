@@ -37,6 +37,15 @@
       },
       "publishAllPorts": true,
       "useSSL": true
+    },
+    "Ordering.API": {
+      "commandName": "Project",
+      "launchBrowser": true,
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      },
+      "dotnetRunMessages": true,
+      "applicationUrl": "http://localhost:8004"
     }
   },
   "$schema": "https://json.schemastore.org/launchsettings.json",

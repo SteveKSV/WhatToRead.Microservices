@@ -12,6 +12,13 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddGrpc();
 
+builder.Services.AddAuthentication("Bearer")
+    .AddIdentityServerAuthentication("Bearer", options =>
+    {
+        options.Authority = "http://localhost:5443";
+        options.ApiName = "Discout.Grpc";
+    });
+
 // Connection/Transaction for ADO.NET/DAPPER database
 builder.Services.AddScoped((s) => new SqlConnection(builder.Configuration.GetConnectionString("DapperConnection")));
 builder.Services.AddScoped<IDbTransaction>(s =>

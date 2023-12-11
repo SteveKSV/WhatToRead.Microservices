@@ -13,6 +13,14 @@ builder.Services.AddHttpClient<IBasketService, BasketService>(c =>
 builder.Services.AddHttpClient<IOrderService, OrderService>(c =>
  c.BaseAddress = new Uri(builder.Configuration.GetSection("ApiSettings:OrderingUrl").Value));
 
+builder.Services.AddAuthentication("Bearer")
+    .AddIdentityServerAuthentication("Bearer", options =>
+    {
+        options.Authority = "http://localhost:5443";
+        options.ApiName = "Shopping.Aggregator";
+    });
+
+
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(c =>
 {
