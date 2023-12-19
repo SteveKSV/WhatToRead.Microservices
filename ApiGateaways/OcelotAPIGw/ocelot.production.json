@@ -2,7 +2,7 @@
   "Routes": [
     //Catalog API
     {
-      "DownstreamPathTemplate": "/api/v1/Book/GetBooks",
+      "DownstreamPathTemplate": "/api/v1/Book/",
       "DownstreamScheme": "https",
       "DownstreamHostAndPorts": [
         {
@@ -11,20 +11,15 @@
         }
       ],
       "UpstreamPathTemplate": "/Catalog/",
-      "UpstreamHttpMethod": [ "GET" ],
-      "AuthenticationOptions": {
-        "AuthenticationProviderKey": "IdentityApiKey",
-        "AllowedScopes": ["openid", "Catalog.API.read", "Catalog.API.write"]
-      },
-      "FileCacheOptions": { "TtlSeconds": 30 }
+      "UpstreamHttpMethod": [ "GET" ]
     },
     {
-      "DownstreamPathTemplate": "/api/v1/Book/GetBookById/{id}",
-      "DownstreamScheme": "http",
+      "DownstreamPathTemplate": "/api/v1/Book/{id}",
+      "DownstreamScheme": "https",
       "DownstreamHostAndPorts": [
         {
           "Host": "localhost",
-          "Port": "8000"
+          "Port": 5001
         }
       ],
       "UpstreamPathTemplate": "/Catalog/{id}",
@@ -32,11 +27,11 @@
     },
     {
       "DownstreamPathTemplate": "/api/v1/Book/GetBookByTitle/{title}",
-      "DownstreamScheme": "http",
+      "DownstreamScheme": "https",
       "DownstreamHostAndPorts": [
         {
           "Host": "localhost",
-          "Port": "8000"
+          "Port": 5001
         }
       ],
       "UpstreamPathTemplate": "/Catalog/GetProductByCategory/{category}",
@@ -44,11 +39,11 @@
     },
     {
       "DownstreamPathTemplate": "/api/v1/Book/GetBooksByAuthor/{authorName}",
-      "DownstreamScheme": "http",
+      "DownstreamScheme": "https",
       "DownstreamHostAndPorts": [
         {
           "Host": "localhost",
-          "Port": "8000"
+          "Port": 5001
         }
       ],
       "UpstreamPathTemplate": "/Catalog/GetBooksByAuthor/{authorName}",
@@ -56,11 +51,11 @@
     },
     {
       "DownstreamPathTemplate": "/api/v1/Book/GetBooksByPublisher/{publisher}",
-      "DownstreamScheme": "http",
+      "DownstreamScheme": "https",
       "DownstreamHostAndPorts": [
         {
           "Host": "localhost",
-          "Port": "8000"
+          "Port": 5001
         }
       ],
       "UpstreamPathTemplate": "/Catalog/GetBooksByPublisher/{publisher}",
@@ -68,11 +63,11 @@
     },
     {
       "DownstreamPathTemplate": "/api/v1/Book/GetBooksByGenre/{genre}",
-      "DownstreamScheme": "http",
+      "DownstreamScheme": "https",
       "DownstreamHostAndPorts": [
         {
           "Host": "localhost",
-          "Port": "8000"
+          "Port": 5001
         }
       ],
       "UpstreamPathTemplate": "/Catalog/GetBooksByGenre/{genre}",
@@ -80,11 +75,11 @@
     },
     {
       "DownstreamPathTemplate": "/api/v1/Book/AddBook",
-      "DownstreamScheme": "http",
+      "DownstreamScheme": "https",
       "DownstreamHostAndPorts": [
         {
           "Host": "localhost",
-          "Port": "8000"
+          "Port": 5001
         }
       ],
       "UpstreamPathTemplate": "/Catalog/AddBook",
@@ -92,23 +87,23 @@
     },
     {
       "DownstreamPathTemplate": "/api/v1/Book/UpdateBook",
-      "DownstreamScheme": "http",
+      "DownstreamScheme": "https",
       "DownstreamHostAndPorts": [
         {
           "Host": "localhost",
-          "Port": "8000"
+          "Port": 5001
         }
       ],
       "UpstreamPathTemplate": "/Catalog/UpdateBook",
       "UpstreamHttpMethod": [ "PUT" ]
     },
     {
-      "DownstreamPathTemplate": "/api/v1/Book/DeleteBook/{id}",
-      "DownstreamScheme": "http",
+      "DownstreamPathTemplate": "/api/v1/Book/{id}",
+      "DownstreamScheme": "https",
       "DownstreamHostAndPorts": [
         {
           "Host": "localhost",
-          "Port": "8000"
+          "Port": 5001
         }
       ],
       "UpstreamPathTemplate": "/Catalog/DeleteBook/{id}",

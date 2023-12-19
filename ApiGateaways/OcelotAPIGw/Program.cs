@@ -4,8 +4,9 @@ using Ocelot.Cache.CacheManager;
 using Microsoft.IdentityModel.Tokens;
 
 var builder = WebApplication.CreateBuilder(args);
-
-builder.Configuration.AddJsonFile($"ocelot.Development.json", true, true);
+var environment = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") ?? "Production";
+var configFileName = $"ocelot.{environment.ToLower()}.json";
+builder.Configuration.AddJsonFile(configFileName, true, true);
 
 var authenticationProviderKey = "IdentityApiKey";
 

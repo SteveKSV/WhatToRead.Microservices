@@ -1,5 +1,7 @@
+using Basket.API.GrpcServices;
 using Basket.API.Managers;
 using Basket.API.Managers.Interfaces;
+using Discount.Grpc.Protos;
 using MassTransit;
 using Microsoft.Extensions.Configuration;
 using Microsoft.OpenApi.Models;
@@ -11,12 +13,12 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
 
-builder.Services.AddAuthentication("Bearer")
-    .AddIdentityServerAuthentication("Bearer", options =>
-    {
-        options.Authority = "http://localhost:5443";
-        options.ApiName = "Basket.API";
-    });
+//builder.Services.AddAuthentication("Bearer")
+//    .AddIdentityServerAuthentication("Bearer", options =>
+//    {
+//        options.Authority = "http://localhost:5443";
+//        options.ApiName = "Basket.API";
+//    });
 
 builder.Services.AddStackExchangeRedisCache(options =>
 {
@@ -30,6 +32,13 @@ builder.Services.AddMassTransit(config =>
                                         rabbitConfig.Host(new Uri(builder.Configuration.GetValue<string>("EventBusSettings:HostAddress")));
                                     });
                                 });
+
+builder.Services.AddGrpcClient<DiscountProtoService.DiscountProtoServiceClient>(options =>
+{
+    options.Address = new Uri("http://localhost:8003");
+});
+
+builder.Services.AddScoped<DiscountGrpcService>();
 
 builder.Services.AddScoped<IBasketManager, BasketManager>();
 builder.Services.AddAutoMapper(Assembly.GetExecutingAssembly());

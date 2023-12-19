@@ -3,6 +3,7 @@ using Discount.Grpc.Repositories;
 using Discount.Grpc.Services;
 using Microsoft.Data.SqlClient;
 using System.Data;
+using Discount.Grpc.Protos;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -12,15 +13,18 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddGrpc();
 
-builder.Services.AddAuthentication("Bearer")
-    .AddIdentityServerAuthentication("Bearer", options =>
-    {
-        options.Authority = "http://localhost:5443";
-        options.ApiName = "Discout.Grpc";
-    });
+//builder.Services.AddAuthentication("Bearer")
+//    .AddIdentityServerAuthentication("Bearer", options =>
+//    {
+//        options.Authority = "http://localhost:5443";
+//        options.ApiName = "Discout.Grpc";
+//    });
+
+// Read the connection string from configuration
+var connectionString = builder.Configuration.GetConnectionString("ConnectionString");
 
 // Connection/Transaction for ADO.NET/DAPPER database
-builder.Services.AddScoped((s) => new SqlConnection(builder.Configuration.GetConnectionString("DapperConnection")));
+builder.Services.AddScoped((s) => new SqlConnection(connectionString));
 builder.Services.AddScoped<IDbTransaction>(s =>
 {
     SqlConnection conn = s.GetRequiredService<SqlConnection>();

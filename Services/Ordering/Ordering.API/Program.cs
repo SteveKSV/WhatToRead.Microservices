@@ -26,12 +26,12 @@ builder.Services.AddMassTransit(config =>
 
 builder.Services.AddControllers();
 
-builder.Services.AddAuthentication("Bearer")
-    .AddIdentityServerAuthentication("Bearer", options =>
-    {
-        options.Authority = "http://localhost:5443";
-        options.ApiName = "Ordering.API";
-    });
+//builder.Services.AddAuthentication("Bearer")
+//    .AddIdentityServerAuthentication("Bearer", options =>
+//    {
+//        options.Authority = "http://localhost:5443";
+//        options.ApiName = "Ordering.API";
+//    });
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();

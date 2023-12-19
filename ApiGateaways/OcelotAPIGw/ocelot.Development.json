@@ -2,7 +2,7 @@
   "Routes": [
     //Catalog API
     {
-      "DownstreamPathTemplate": "/api/v1/Book/GetBooks",
+      "DownstreamPathTemplate": "/api/v1/Book/",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
@@ -12,10 +12,14 @@
       ],
       "UpstreamPathTemplate": "/Catalog/",
       "UpstreamHttpMethod": [ "GET" ],
-      "FileCacheOptions": { "TtlSeconds": 30 }
+      //"FileCacheOptions": { "TtlSeconds": 30 },
+      //"AuthenticationOptions": {
+      //  "AuthenticationProviderKey": "IdentityApiKey",
+      //  "AllowedScopes": [ "openid", "Catalog.API.read", "Catalog.API.write" ]
+      //}
     },
     {
-      "DownstreamPathTemplate": "/api/v1/Book/GetBookById/{id}",
+      "DownstreamPathTemplate": "/api/v1/Book/{id}",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
@@ -99,7 +103,7 @@
       "UpstreamHttpMethod": [ "PUT" ]
     },
     {
-      "DownstreamPathTemplate": "/api/v1/Book/DeleteBook/{id}",
+      "DownstreamPathTemplate": "/api/v1/Book/{id}",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {

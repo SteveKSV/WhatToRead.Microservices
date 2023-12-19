@@ -8,7 +8,6 @@ namespace Shopping.Aggregator.Controllers
 {
     [ApiController]
     [Route("api/v1/[controller]")]
-    [Authorize]
     public class ShoppingController : ControllerBase
     {
         private readonly ICatalogService _catalogService;

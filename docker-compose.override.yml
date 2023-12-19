@@ -60,8 +60,6 @@ services:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - "DatabaseSettings:ConnectionString=mongodb://catalogdb:27017"
-    networks:
-      - backend
     depends_on:
       - catalogdb
     ports:
@@ -116,8 +114,6 @@ services:
         - ordering.api
     ports:
       - "8010:80"
-    networks:
-      - backend
   
   shopping.aggregator:
     container_name: shopping.aggregator
@@ -132,3 +128,23 @@ services:
         - ordering.api
     ports:
         - "8005:80"
+
+  elasticsearch:
+     container_name: elasticsearch
+     environment:
+        - xpack.monitoring.enabled=true
+        - xpack.watcher.enabled=false
+        - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+        - discovery.type=single-node
+     ports:
+        - "9200:9200"
+     volumes:
+        - elasticsearch-data:/usr/share/elasticsearch/data
+  kibana:
+     container_name: kibana
+     environment: 
+        - ELASTICSEARCH_URL=http://localhost:9200
+     depends_on:
+        - elasticsearch
+     ports:
+        - "5601:5601"

@@ -12,7 +12,6 @@ namespace Basket.API.Controllers
 {
     [ApiController]
     [Route("/api/v1/[controller]")]
-    [Authorize]
     public class BasketController : ControllerBase
     {
         private readonly IBasketManager _manager;

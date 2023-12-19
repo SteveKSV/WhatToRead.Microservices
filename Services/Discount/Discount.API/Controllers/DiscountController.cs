@@ -8,7 +8,6 @@ namespace Discount.API.Controllers
 {
     [ApiController]
     [Route("/api/v1/[controller]")]
-    [Authorize]
     public class DiscountController : ControllerBase
     {
         private readonly IDiscountManager _manager;

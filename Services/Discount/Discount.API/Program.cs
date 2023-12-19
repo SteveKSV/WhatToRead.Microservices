@@ -11,14 +11,16 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
 
-builder.Services.AddAuthentication("Bearer")
-    .AddIdentityServerAuthentication("Bearer", options =>
-    {
-        options.Authority = "http://localhost:5443";
-        options.ApiName = "Discout.API";
-    });
+//builder.Services.AddAuthentication("Bearer")
+//    .AddIdentityServerAuthentication("Bearer", options =>
+//    {
+//        options.Authority = "http://localhost:5443";
+//        options.ApiName = "Discout.API";
+//    });
 
 // Connection/Transaction for ADO.NET/DAPPER database
+
+
 builder.Services.AddScoped((s) => new SqlConnection(builder.Configuration.GetConnectionString("DapperConnection")));
 builder.Services.AddScoped<IDbTransaction>(s =>
 {
